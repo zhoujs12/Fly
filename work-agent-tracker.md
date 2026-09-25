@@ -116,7 +116,9 @@ work agent 大致处在 coding agent 2024 年底 / 2025 年初的位置。曲线
 
 ## 复查操作手册
 
-1. **AEI**:调用 Economic Index MCP(`econ_index_get_dataset_overview` 取 `latest_period`;若 period 比上次记录新,则 `econ_index_get_global_usage` 重算 I6 两个 bundle 与 automation_pct)
+1. **AEI**:优先调用 Economic Index MCP(`econ_index_get_dataset_overview` 取 `latest_period`;若 period 比上次记录新,则 `econ_index_get_global_usage` 重算 I6 两个 bundle 与 automation_pct)
+   - ⚠️ **降级路径**:月度 Routine 触发的会话**没有携带 MCP connector**,`econ_index_*` 工具不可用。此时改用 WebSearch 找最新一期 AEI 报告,把取到的数字标 ⚠️(二手),并在备注里写明"MCP 不可用,数字为搜索摘要"。不要因为工具缺失就跳过 I6。
+   - 根治办法:由用户在 claude.ai 的 Routines 界面重建该 Routine(界面创建可携带 connector),或从一个持有 AEI connector 的会话创建。
 2. **Ramp AI Index**:搜 `Ramp AI Index <月份> 2026`,取整体采用率、厂商份额、spend-per-seat、token 价格走向 → I5
 3. **ARR 里程碑**:搜 Glean / Harvey / Sierra / Decagon / Cowork + `ARR` → I2
 4. **benchmark**:搜 agentic benchmark 长程任务成功率最新榜 → I4
